@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 
     # Third-party
+    "corsheaders",
     "rest_framework",
     "django_filters",
 
@@ -35,6 +36,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -99,6 +101,12 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Disable automatic slash appending to keep endpoints without trailing slash
 APPEND_SLASH = False
+
+
+# CORS
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+]
 
 
 # DRF configuration
