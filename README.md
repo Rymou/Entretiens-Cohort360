@@ -41,7 +41,7 @@ Exercice backend avec Django REST Framework pour créer l'API de gestion des pre
 
 ---
 
-### 3. 📊 **Backend Scala / Spark** *(optionnel)*
+### 3. 📊 **Backend Scala / Spark** _(optionnel)_
 
 Exercice orienté traitement de données massives avec Scala et Apache Spark.
 
@@ -66,10 +66,73 @@ Le troisième exercice (**Scala/Spark**) est :
 ## ▶️ Ordre Recommandé de Réalisation
 
 | Ordre | Exercice           | Statut      | Durée estimée |
-|-------|--------------------|-------------|---------------|
-| 1️⃣   | **Backend Django** | Obligatoire | ~1h           |
-| 2️⃣   | **Frontend**       | Obligatoire | ~2-3h         |
-| 3️⃣   | **Scala/Spark**    | Optionnel   | <1h           |
+| ----- | ------------------ | ----------- | ------------- |
+| 1️⃣    | **Backend Django** | Obligatoire | ~1h           |
+| 2️⃣    | **Frontend**       | Obligatoire | ~2-3h         |
+| 3️⃣    | **Scala/Spark**    | Optionnel   | <1h           |
+
+---
+
+## 🚀 Comment lancer les exercices
+
+Chaque exercice se lance dans son propre dossier. Voici les commandes essentielles.
+
+### 1. Exercice Django (Backend API)
+
+**Prérequis :** Python 3.10+, pip
+
+```bash
+cd Exercice_Django
+python3 -m venv .venv
+source .venv/bin/activate   # Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+python manage.py makemigrations
+python manage.py migrate
+python manage.py seed_demo --patients 2500 --medications 150
+python manage.py runserver
+```
+
+- **API :** http://127.0.0.1:8000/
+- **Patients :** http://127.0.0.1:8000/Patient
+- **Médicaments :** http://127.0.0.1:8000/Medication
+- **Prescriptions :** http://127.0.0.1:8000/Prescription
+
+À garder lancé pour que le frontend puisse consommer l’API.
+
+---
+
+### 2. Exercice Front (Frontend)
+
+**Prérequis :** Node.js, npm. L’**API Django doit être lancée** (voir ci‑dessus).
+
+```bash
+cd Exercice_Front
+npm install
+npm run dev
+```
+
+- **App :** http://localhost:3000 (ou le port indiqué dans le terminal)
+- Page des prescriptions : http://localhost:3000/prescriptions
+
+---
+
+### 3. Exercice Scala / Spark (optionnel)
+
+**Prérequis :** Docker, Java 17, SBT. Détails dans [`Exercice_scala_spark/README.md`](./Exercice_scala_spark/README.md).
+
+```bash
+cd Exercice_scala_spark
+cp .env.example .env
+docker compose up -d
+./sbt-run.sh compile
+./sbt-run.sh test
+./sbt-run.sh run
+```
+
+- **Solr :** http://localhost:8983
+- Le résultat du job s’affiche dans le terminal (ex. `Nombre de patients trouvés : 3`).
+
+Sans le script helper : après `source ~/.sdkman/bin/sdkman-init.sh` et `export SBT_OPTS="-Dsbt.global.base=$HOME/.sbt"`, utiliser `sbt run` et `sbt test` dans `Exercice_scala_spark`.
 
 ---
 
@@ -88,8 +151,6 @@ Chaque sous-repository contient son propre **README détaillé** avec :
 
 Vous pouvez fork ce repository afin de recuperer le code existant et lancer le projet facilement, puis nous soumettre l'URL de votre repo par e-mail.
 
-
 ---
 
 **Bon courage ! 🎓**
-
