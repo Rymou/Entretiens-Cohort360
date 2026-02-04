@@ -1,0 +1,56 @@
+.wrapper {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.table th,
+.table td {
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.table thead th {
+  background: #f5f5f5;
+  font-weight: 600;
+  position: sticky;
+  top: 0;
+}
+
+.table tbody tr:hover {
+  background: #fafafa;
+}
+
+.badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.badge_valide {
+  background: #e6f4ea;
+  color: #1e7e34;
+}
+
+.badge_en_attente {
+  background: #fff8e1;
+  color: #f57f17;
+}
+
+.badge_suppr {
+  background: #fce4ec;
+  color: #c62828;
+}
+
+.empty {
+  text-align: center;
+  padding: 40px;
+  color: #888;
+}
