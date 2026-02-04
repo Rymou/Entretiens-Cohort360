@@ -4,7 +4,7 @@ from datetime import date, timedelta
 
 from django.core.management.base import BaseCommand
 
-from medical.models import Patient, Medication
+from medical.models import Patient, Medication, Prescription
 
 
 def random_date(start_year=1940, end_year=2025):
@@ -17,11 +17,13 @@ def random_date(start_year=1940, end_year=2025):
 class Command(BaseCommand):
     Patient.objects.all().delete()
     Medication.objects.all().delete()
-    help = "Seed the database with demo Patients and Medications"
+    Prescription.objects.all().delete()
+    help = "Seed the database with demo Patients, Medications and Prescriptions"
 
     def add_arguments(self, parser):
         parser.add_argument("--patients", type=int, default=10)
         parser.add_argument("--medications", type=int, default=5)
+        parser.add_argument("--prescriptions", type=int, default=30)
 
     def handle(self, *args, **options):
         n_patients = options["patients"]
@@ -86,6 +88,30 @@ class Command(BaseCommand):
             m = Medication.objects.create(code=code, label=label, status=status)
             created_meds.append(m)
 
+        n_prescriptions = options["prescriptions"]
+        created_prescriptions = []
+        statuses = [Prescription.STATUS_VALIDE, Prescription.STATUS_EN_ATTENTE, Prescription.STATUS_SUPPR]
+        for _ in range(n_prescriptions):
+            start = random_date(2020, 2025)
+            end = start + timedelta(days=random.randint(1, 180))
+            p = Prescription.objects.create(
+                patient=random.choice(created_patients),
+                medication=random.choice(created_meds),
+                start_date=start,
+                end_date=end,
+                status=random.choices(statuses)[0],
+                comment=random.choice([
+                    "", "", "",
+                    "Prise matin et soir",
+                    "Après les repas",
+                    "À jeun",
+                    "Surveillance nécessaire",
+                    "Renouvellement automatique",
+                ]),
+            )
+            created_prescriptions.append(p)
+
         self.stdout.write(self.style.SUCCESS(
-            f"Created {len(created_patients)} patients and {len(created_meds)} medications."
+            f"Created {len(created_patients)} patients, {len(created_meds)} medications "
+            f"and {len(created_prescriptions)} prescriptions."
         ))
